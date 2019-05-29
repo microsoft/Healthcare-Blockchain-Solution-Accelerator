@@ -1,0 +1,161 @@
+import static java.lang.System.getenv
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'distribution'
+    id 'maven-publish'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+    id 'net.researchgate.release' version '2.8.0'
+    id 'org.unbroken-dome.test-sets' version '2.1.1'
+    id "org.jlleitschuh.gradle.ktlint" version '7.1.0'
+    id 'com.github.johnrengelman.shadow' version '4.0.3'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven {
+        url getenv("CONTOSO_ARTIFACTS_URL") ?: contosoArtifactsUrl
+        credentials {
+            username getenv("CONTOSO_ARTIFACTS_USERNAME") ?: contosoArtifactsUsername
+            // FIXME Rename env variable to CONTOSO_ARTIFACTS_ACCESS_TOKEN when is ready in Docker image
+            password getenv("CONTOSO_ARTIFACTS_ACCESS_TOKEN") ?: contosoArtifactsAccessToken
+        }
+    }
+}
+
+def props = new Properties()
+file("version.properties").withInputStream {
+    props.load(it)
+}
+
+group 'com.contoso.healthcare'
+version props['version']
+
+testSets {
+    integrationTest {
+        dirName = 'integration-test'
+    }
+}
+
+integrationTest.dependsOn test
+
+ext {
+    fabricVersion = '1.4.0'
+    jacksonVersion = '2.9.8'
+    validatorApiVersion = '2.0.0.Final'
+    bvalVersion = '2.0.0'
+    protobufVersion = '3.7.0'
+    slf4jVersion = '1.7.26'
+    kloggingVersion = '1.6.25'
+    logbackVersion = '1.2.3'
+    junitVersion = '5.4.0'
+    assertJVersion = '3.12.0'
+    mockkVersion = '1.9'
+}
+
+configurations.all {
+    resolutionStrategy {
+        preferProjectModules()
+        cacheChangingModulesFor 0, 'seconds'
+    }
+}
+
+distributions {
+    azure {
+        contents {
+            from projectDir
+            excludes = ['build', '.gradle', 'gradle', 'gradlew', 'gradlew.bat']
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib',
+            "com.contoso.healthcare:contoso-healthcare-profile-protos:$version",
+            "com.contoso.healthcare:contoso-healthcare-service-grpc:$version",
+            "com.google.protobuf:protobuf-java:$protobufVersion",
+            "com.google.protobuf:protobuf-java-util:$protobufVersion",
+            "io.github.microutils:kotlin-logging:$kloggingVersion",
+            "org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:$fabricVersion",
+            "com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion",
+            "javax.validation:validation-api:$validatorApiVersion",
+            "org.apache.bval:org.apache.bval.bundle:$bvalVersion",
+            "org.slf4j:log4j-over-slf4j:$slf4jVersion",
+            "org.slf4j:jcl-over-slf4j:$slf4jVersion",
+            "org.slf4j:jul-to-slf4j:$slf4jVersion"
+
+    runtimeOnly "ch.qos.logback:logback-classic:$logbackVersion"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion",
+            "org.junit.jupiter:junit-jupiter-params:$junitVersion",
+            "org.assertj:assertj-core:$assertJVersion"
+
+    testImplementation("io.mockk:mockk:$mockkVersion") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+    integrationTestImplementation "com.contoso.healthcare:contoso-healthcare-common:$version"
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    archiveClassifier.set('sources')
+}
+
+tasks.withType(JavaCompile) {
+    options.fork = true
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    reports.html.enabled = false
+    reports.junitXml.enabled = false
+}
+
+shadowJar {
+    baseName = 'chaincode'
+    classifier = null
+    version = null
+
+    manifest {
+        attributes 'Main-Class': 'com.contoso.healthcare.shim.HealthcareChaincode'
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            artifact sourceJar
+        }
+    }
+    repositories {
+        maven {
+            url getenv("CONTOSO_ARTIFACTS_URL") ?: contosoArtifactsUrl
+            credentials {
+                username getenv("CONTOSO_ARTIFACTS_USERNAME") ?: contosoArtifactsUsername
+                // FIXME Rename env variable to CONTOSO_ARTIFACTS_ACCESS_TOKEN when is ready in Docker image
+                password getenv("CONTOSO_ARTIFACTS_ACCESS_TOKEN") ?: contosoArtifactsAccessToken
+            }
+        }
+    }
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+compileKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+wrapper {
+    gradleVersion = '5.1.1'
+}

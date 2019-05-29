@@ -1,0 +1,18 @@
+<nav class="navbar navbar-dark" style="background-color: #132D49">
+  <!--TODO - should not be hardcoded NY-->
+  <span class="navbar-brand mb-0 pl-5 h1 display-4">Select User – NY State</span>
+</nav>
+
+<div class="container mt-3">
+  <div id="con-profile" class="row">
+    <div class="col-md-4" *ngFor="let appUser of appUsers">
+        <div class="card mx-auto con-profile-selection" style="width: 18rem;" (click)="userLogin(appUser)">
+            <img class="card-img-top con-profile-selection-user-picture mx-auto mt-2" [src]="appUser.imgsrc" alt="Card image cap">
+            <div class="card-body mx-auto">
+              <p class="card-text "><label style="font-weight: bold">Name: </label> {{appUser.name}}</p>
+              <p class="card-text"><label style="font-weight: bold">Role: </label> {{appUser.role}}</p>
+            </div>
+          </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.0" />
+    <PackageReference Include="Grpc.Core" Version="1.21.0-pre1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Healthcare.BC.Offchain\Healthcare.BC.Offchain.Repository\Healthcare.BC.Offchain.Repository.csproj" />
+    <ProjectReference Include="..\..\Proto\Service\Healthcare.BC.Chain.Services.csproj" />
+  </ItemGroup>
+
+</Project>

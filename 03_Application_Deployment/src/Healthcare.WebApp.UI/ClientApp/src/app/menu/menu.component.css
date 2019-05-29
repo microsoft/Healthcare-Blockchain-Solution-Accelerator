@@ -1,0 +1,12 @@
+.navbar-dark .navbar-nav a.nav-link.con-menu-item {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+  .navbar-dark .navbar-nav a.nav-link.con-menu-item.active {
+    color: #FF8601;
+  }
+
+.navbar-dark .navbar-nav li.nav-item.con-nav-item > a.nav-link.con-menu-item.active {
+  background-color: #132D49;
+}

@@ -1,0 +1,26 @@
+<div class="container mt-3">
+  <table class="table table-striped con-table hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+    <thead class="con-table-header">
+      <tr>
+        <th>Name</th>
+        <th>Last 12 Citizen Identifier</th>
+        <th>Date of Birth</th>
+        <th>City</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize-->
+      <tr *ngFor="let contract of contracts" (click)="addUser(contract)">
+        <td>{{contract.businessContractDTO.basicProfile.name}}</td>
+        <td>{{contract.businessContractDTO.citizenIdentifier?.split('-').pop()}}</td>
+        <td>{{contract.businessContractDTO.basicProfile.dateOfBirth | date: 'MM/dd/yyyy'}}</td>
+        <td>{{contract.businessContractDTO.basicProfile.address.city}}</td>
+        <td><span class="badge badge-warning">{{contract.businessContractDTO.status | profileStatus}}</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <!--<ngb-pagination [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="items.length" [boundaryLinks]="true"></ngb-pagination>-->
+</div>

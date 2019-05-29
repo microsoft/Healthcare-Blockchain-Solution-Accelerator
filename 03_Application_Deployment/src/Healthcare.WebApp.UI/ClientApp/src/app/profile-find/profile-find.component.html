@@ -1,0 +1,94 @@
+<nav class="navbar navbar-dark" style="background-color: #132D49">
+  <span class="navbar-brand mb-0 pl-5 h1 display-4">Find Citizen</span>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <a class="ml-auto" href="" routerLink="/create-profile" routerLinkActive="active">
+      <i class="fas fa-plus"></i>
+      New Client
+    </a>
+  </div>
+  <!--TODO - display pattern matching invalid msg (no pop-up, cut down on clicks)-->
+  <!--<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form pt-5 needs-validation" novalidate>-->
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="form pt-5">
+    <div class="form-group row mb-2 justify-content-center">
+      <label for="citizenIdentifierInput" class="col-form-label">Citizen Identifier</label>
+      <div class="mx-sm-3 col-sm-6">
+        <input type="text" #searchName ngModel class="form-control" name="searchName" id="citizenIdentifierInput"
+          placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+          pattern="/^[0-9A-F]{8}[-](?:[0-9A-F]{4}[-]){3}[0-9A-F]{12}$/i">
+        <!--<input type="text" ngModel class="form-control" [ngClass]="{'is-invalid':!form.valid}"
+               name="searchName" id="citizenIdentifierInput" required
+               placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" pattern="/^[0-9A-F]{8}[-](?:[0-9A-F]{4}[-]){3}[0-9A-F]{12}$/i">
+        <div class="invalid-feedback" *ngIf="f.value['searchName'].errors?.pattern">
+          Please provide a valid Citizen Identifier.
+        </div>-->
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+  <!--<div *ngIf="showResultsTable">
+    <h3>More than one Result found! ({{numberResults}})</h3>
+    <table class="table table-striped con-table">
+      <thead class="con-table-header">
+        <tr>
+          <th>Name</th>
+          <th>Last 12 Citizen Identifier</th>
+          <th>Date of Birth</th>
+          <th>City</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contract of filteredIncompletedProfiles" (click)="addUser(contract)">
+          <td>{{contract.businessContractDTO.basicProfile.name}}</td>
+          <td>{{contract.businessContractDTO.citizenIdentifier.split('-').pop()}}</td>
+          <td>{{contract.businessContractDTO.basicProfile.dateOfBirth | date: 'MM/dd/yyyy'}}</td>
+          <td>{{contract.businessContractDTO.basicProfile.address.city}}</td>
+          <td><span class="badge badge-warning">{{contract.businessContractDTO.status | profileStatus}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>-->
+</div>
+
+<!--CHANGE STATE MODAL-->
+<div class="modal fade" id="modalDiffState" tabindex="-1" role="dialog" aria-labelledby="modalDiffState"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title">
+          <i class="fas fa-exclamation-triangle"></i>
+          Citizen Profile - Different State
+        </h5>
+      </div>
+      <div class="modal-body text-center">
+        The Citizen Profile found does not belong to your State.
+        <br />
+        Are you willing to change the ownership to your State?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No - Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="ChangeState()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESSING MODAL -->
+<div class="modal fade" id="modalprocessing" tabindex="-1" role="dialog" aria-labelledby="modalProcessing"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div>
+            Transaction Processing..........
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

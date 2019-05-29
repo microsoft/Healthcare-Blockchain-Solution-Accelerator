@@ -1,0 +1,29 @@
+.con-logo,
+.con-logo:active {
+  text-decoration: none;
+}
+
+  .con-logo span {
+    color: black;
+    font-weight: 900;
+  }
+
+.con-logo img {
+  width: 45px;
+  height: 45px;
+}
+
+.con-page-title {
+  border-left: 2px solid gray;
+  color: gray;
+}
+
+.con-user-picture {
+  /*display: inline-block;*/
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}

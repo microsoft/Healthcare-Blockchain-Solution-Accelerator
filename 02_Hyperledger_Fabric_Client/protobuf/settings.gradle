@@ -1,0 +1,7 @@
+rootProject.name = 'contoso-healthcare-protos'
+
+include 'profile'
+findProject(':profile')?.name = 'contoso-healthcare-profile-protos'
+
+include 'service'
+findProject(':service')?.name = 'contoso-healthcare-service-grpc'

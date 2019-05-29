@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
+  <!-- Add your custom configuration sections and parameters here -->
+  <Section Name="ESCClient">
+    <Parameter Name="REQUEST_QUEUE_NAME" Value="apirequest" />
+    <Parameter Name="RESPONSE_QUEUE_NAME" Value="apiresponse" />
+    <Parameter Name="QUEUE_PATH" Value="" />
+    <Parameter Name="API_URL" Value="10.244.1.4" />
+    <Parameter Name="API_PORT" Value="11122" />
+    <Parameter Name="MESSAGE_WAIT_TIMEOUT_SECONDS" Value="2" />
+  </Section>
+</Settings>

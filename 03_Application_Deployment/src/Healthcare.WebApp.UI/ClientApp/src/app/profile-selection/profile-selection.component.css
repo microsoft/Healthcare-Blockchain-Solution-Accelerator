@@ -1,0 +1,25 @@
+#con-profile .con-profile-selection {
+  background-color: #132D49;
+  color: white;
+  cursor: pointer;
+}
+
+/**STATE APPROVER COLOUR**/
+#con-profile > div:nth-child(1) > div:nth-child(1) {
+  background-color: #155d1e; /* #24a335;*/
+}
+
+/**ENROLLMENT BROKER COLOUR**/
+#con-profile > div:nth-child(3) > div:nth-child(1) {
+  background-color: #dd7600; /*#ff8800;*/
+}
+
+.con-profile-selection-user-picture {
+  /*display: inline-block;*/
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}

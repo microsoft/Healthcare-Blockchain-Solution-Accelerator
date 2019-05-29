@@ -1,0 +1,8 @@
+ext {
+    konfigVersion = '1.6.10.0'
+}
+
+dependencies {
+    api "org.hyperledger.fabric-sdk-java:fabric-sdk-java:$fabricVersion",
+            "com.natpryce:konfig:$konfigVersion"
+}

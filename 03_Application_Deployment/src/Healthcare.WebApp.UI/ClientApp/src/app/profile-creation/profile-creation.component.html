@@ -1,0 +1,171 @@
+<nav class="navbar navbar-dark" style="background-color: #132D49">
+  <span class="navbar-brand mb-0 pl-5 h1 display-4">Create Profile</span>
+</nav>
+<div class="container mt-3">
+  <div class="card">
+    <h5 class="card-header" id="identity">
+      Citizen Profile
+    </h5>
+    <div class="card-body">
+      <!-- TODO - Add validation to the fields -->
+      <form #profileForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-4">
+            <div class="form-row">
+              <div class="hovereffect">
+                <img #img id="imgProofE" class="pl-2 img-responsive" [src]="imgUrl" alt="Citizen Proof Document"
+                  width="270" height="150">
+                <div class="overlay">
+                  <input #file id="uploadFile" type="file" accept="image/*" (change)="changeListener($event)">
+                  <label for="uploadFile" class="h2">Upload Proof Photo</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col">
+                  <label class="font-weight-bold con-required" for="firstName">First Name</label>
+                  <input type="text" required class="form-control" id="firstName" name="firstName"
+                    [(ngModel)]="model.firstName" />
+                </div>
+                <div class="col">
+                  <label class="font-weight-bold" for="midName">Middle Name</label>
+                  <input type="text" class="form-control" id="midName" name="midName" [(ngModel)]="model.middleName" />
+                </div>
+                <div class="col">
+                  <label class="font-weight-bold con-required" for="lastName">Last Name</label>
+                  <input type="text" required class="form-control" id="lastName" name="lastName"
+                    [(ngModel)]="model.lastName" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col">
+                  <label class="font-weight-bold con-required" for="dateOfBirth">Date of Birth</label>
+                  <input type="date" required class="form-control" id="dateOfBirth" name="dateOfBirth"
+                    [(ngModel)]="model.dateOfBirth" placeholder="MM/DD/YYYY" />
+                </div>
+                <div class="col">
+                  <label class="font-weight-bold con-required" for="citizenship">Citizenship</label>
+                  <input type="text" required class="form-control" id="citizenship" name="citizenship"
+                    [(ngModel)]="model.citizenship" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col">
+              <label class="font-weight-bold con-required" for="street">Street</label>
+              <input type="text" required class="form-control" id="street" name="street" [(ngModel)]="model.street" />
+            </div>
+            <div class="col">
+              <label class="font-weight-bold con-required" for="city">City</label>
+              <input type="text" required class="form-control" id="city" name="city" [(ngModel)]="model.city" />
+            </div>
+            <div class="col-1">
+              <label class="font-weight-bold con-required" for="state">State</label>
+              <!--TODO-->
+              <select class="form-control" required id="state" name="state" [(ngModel)]="model.state">
+                <!--<option>NJ</option>-->
+                <option>NY</option>
+              </select>
+            </div>
+            <div class="col">
+              <label class="font-weight-bold con-required" for="postcode">Postal Code</label>
+              <input type="text" required class="form-control" id="postcode" name="postcode" [(ngModel)]="model.zip" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col">
+              <label class="font-weight-bold con-required" for="federalIncome">Federal Income</label>
+              <input type="number" required class="form-control" id="federalIncome" name="federalIncome"
+                [(ngModel)]="model.federalIncome" />
+            </div>
+            <div class="col">
+              <label class="font-weight-bold con-required" for="stateIncome">State Income</label>
+              <input type="number" required class="form-control" id="stateIncome" name="stateIncome"
+                [(ngModel)]="model.stateIncome" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="font-weight-bold con-required" for="preferredHealthcarePlan">Preferred Healthcare Plan</label>
+          <select class="form-control" required id="preferredHealthcarePlan" name="preferredHealthcarePlan"
+            [(ngModel)]="model.preferredHealthcarePlan">
+            <option *ngFor="let plan of availablePlans" [ngValue]="plan">{{plan.name}}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!profileForm.form.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- PROCESSING MODAL -->
+<div class="modal fade" id="modalcreationprocessing" tabindex="-1" role="dialog"
+  aria-labelledby="modalcreationprocessing" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div>
+            Transaction Processing ....................
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE PROFILE SUCCESSFUL MODAL -->
+<div class="modal fade" id="modalCreateSuccessful" tabindex="-1" role="dialog" aria-labelledby="modalCreateSuccessful"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div>
+            The Citizen Profile was created successfully!
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="createModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBMISSION SUCCESSFUL MODAL -->
+<div class="modal fade" id="modalSubmitSuccessful" tabindex="-1" role="dialog" aria-labelledby="modalSubmitSuccessful"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <img src="../../assets/VerificationSuccessful.png" alt="Submission Successful"
+            style="height: 90%; width: 90%;">
+        </div>
+        <div class="row justify-content-center">
+          <div>
+            <span style="color:#24A335;"><strong>Good news!</strong></span>
+            Submission was successful. A broker will now perform a review and provide recommendations on benefits
+            based
+            on the information submitted in this profile.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="successModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="container-fluid" style="background-color: #fff;">
+  <div class="row p-2 justify-content-around">
+    <div class="col-md-3">
+      <a class="con-logo" href="/">
+        <span class="align-middle">
+          <strong>{{companyTitle | uppercase}}</strong>
+          <img src="assets/Contoso-logo.png" class="d-inline-block ml-2" alt="">
+        </span>
+        <label class="con-page-title pl-3 ml-3 mb-0 align-middle">
+          {{pageTitle}}
+        </label>
+      </a>
+    </div>
+    <div class="col-md-3">
+      <div class="float-right pt-md-2" *ngIf="isUserLogged">
+        <a class="align-middle" href="#">{{currentUser.name}}</a>
+        <img [src]="currentUser.imgsrc" class="con-user-picture ml-1 align-middle">
+        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-cog" style="color: #505050;"></i>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" style="cursor:pointer;" (click)="userLogout()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-menu></app-menu>
+<router-outlet></router-outlet>

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>Healthcare.BC.Offchain.Repository</AssemblyName>
+    <RootNamespace>Healthcare.BC.Offchain.Repository</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.8.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.2" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.7.2" />
+  </ItemGroup>
+
+</Project>

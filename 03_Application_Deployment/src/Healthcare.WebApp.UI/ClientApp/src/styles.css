@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #EAEDF1;
+}
+
+.con-required:after {
+  color: #d00;
+  content: "*";
+  position: absolute;
+  margin-left: 8px;
+  /*top: 7px;*/
+}
+
+/** GRID LAYOUTS **/
+.con-table {
+  border-radius: 15% 15% 0% 0%;
+}
+
+.con-table-header {
+  background: #274463;
+  color: white;
+}
+/** END GRID LAYOUTS **/
+
+/*.con-button {
+  background-color: #132D49;
+  color: white;
+}*/
