@@ -1,0 +1,24 @@
+<div class="container-fluid sub-nav">
+  <div class="container">
+    <a href="/" class="mr-2">Dashboard</a> /
+    <span class="mx-2">Select User – NY State</span>
+  </div>
+</div>
+<div class="container">
+  <h4 class="mt-4">Please select a user</h4>
+  <div id="con-profile" class="row">
+    <div class="col-md-4" *ngFor="let appUser of appUsers">
+      <div class="user-type" (click)="userLogin(appUser)">
+        <div class="image-box">
+          <figure>
+            <img class="avatar-1" alt="" />
+          </figure>
+        </div>
+        <h6>{{ appUser.name }}</h6>
+        <p>
+          {{ appUser.role }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

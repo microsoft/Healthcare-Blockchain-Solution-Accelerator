@@ -1,0 +1,78 @@
+.con-profile-selection-user-picture {
+  /*display: inline-block;*/
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.user-type {
+  background-color: #fff;
+  min-height: 150px;
+  padding: 60px 10px 10px;
+  text-align: center;
+  margin: 80px 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
+}
+.user-type:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.image-box {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 5px solid #fff;
+}
+.image-box img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+figure {
+  margin: 0;
+}
+.avatar-1 {
+  background-color: #1f8cc9;
+}
+.avatar-2 {
+  background-color: #9ee5ee;
+}
+.avatar-3 {
+  background-color: #495ebe;
+}
+#con-profile
+  > div:nth-child(1)
+  > div:nth-child(1)
+  > div:nth-child(1)
+  > figure:nth-child(1)
+  > img:nth-child(1) {
+  background-color: #1f8cc9;
+  content: url(/assets/avatar-1.svg);
+}
+#con-profile
+  > div:nth-child(2)
+  > div:nth-child(1)
+  > div:nth-child(1)
+  > figure:nth-child(1)
+  > img:nth-child(1) {
+  background-color: #9ee5ee;
+  content: url(/assets/avatar-2.svg);
+}
+#con-profile
+  > div:nth-child(3)
+  > div:nth-child(1)
+  > div:nth-child(1)
+  > figure:nth-child(1)
+  > img:nth-child(1) {
+  background-color: #495ebe;
+  content: url(/assets/avatar-3.svg);
+}

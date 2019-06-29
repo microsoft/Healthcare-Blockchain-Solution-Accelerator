@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "fabric:/Healthcare.AppHosting/Healthcare.BC.Application.API",
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

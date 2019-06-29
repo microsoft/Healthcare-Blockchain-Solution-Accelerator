@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package contoso.healthcare;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Healthcare.BC.Chain.Services";
+option java_package = "com.contoso.healthcare.profile.messages";
+option java_multiple_files = true;
+
+message Profile {
+    ProfileStatus status = 1;
+    BasicProfileItem basic_profile = 2;
+    DocProof identify_proofs = 3;
+    HealthcarePlan current_healthcare_plan = 4;
+    HealthcarePlanItem preferred_healthcare_plan = 5;
+    string transaction_id = 6;
+    google.protobuf.Timestamp transacted_time = 7;
+    string description = 8;
+    bool enrolled_health_insurance = 9;
+    string citizen_identifier = 10;
+    State active_state = 11;
+    string state_approver = 12;
+}
+
+message BasicProfileItem {
+    Address full_address = 3;
+    ApplicationType application_type = 4;
+    string name = 5;
+    google.protobuf.Timestamp date_of_birth = 6;
+    bool citizenship = 7;
+    double fed_income = 8;
+    double state_income = 9;
+}
+
+message Address {
+    string street = 1;
+    string city = 2;
+    string zip = 3;
+    State state = 4;
+}
+
+message DocProof {
+    string file_name = 1;
+    string hash = 2;
+    string content_type = 3;
+    string container = 4;
+    string storage_sharding = 5;
+}
+
+message HealthcarePlanItem {
+    string id = 1;
+    string name = 2;
+}
+
+message HealthcarePlan {
+    HealthcarePlanItem plan = 1;
+    HealthcareStatus healthcare_status = 2;
+    EnrollmentStatus enrollment_status = 3;
+    State owner_state = 4;
+    State enrollment_broker_assigned_state = 5;
+    string plan_approver = 6;
+    bool eligible = 7;
+    bool approved = 8;
+    google.protobuf.Timestamp assigned_date = 9;
+    google.protobuf.Timestamp enrolled_date = 10;
+    google.protobuf.Timestamp approved_date = 11;
+}
+
+enum EnrollmentStatus {
+    PENDING = 0;
+    MANDATORY = 1;
+    VOLUNTARY = 2;
+    IN_ELIGIBLE = 3;
+}
+
+enum HealthcareStatus {
+    NOT_ASSIGNED = 0;
+    ASSIGNED = 1;
+    APPROVED = 2;
+    ENROLLED = 3;
+}
+
+enum ProfileStatus {
+    CREATED = 0;
+    COMPLETED = 1;
+}
+
+enum ApplicationType {
+    INDIVIDUAL = 0;
+    FAMILY = 1;
+}
+
+enum State {
+    NY = 0;
+    NJ = 1;
+    reserved 2 to 100;
+}

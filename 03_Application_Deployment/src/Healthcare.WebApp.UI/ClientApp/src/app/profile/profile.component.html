@@ -1,0 +1,53 @@
+<div class="container-fluid sub-nav">
+  <div class="container">
+    <a href="/" class="mr-2">Dashboard</a> /
+    <span class="mx-2">{{
+      contract?.businessContractDTO.basicProfile.name
+    }}</span>
+  </div>
+</div>
+<!-- 
+<nav class="navbar navbar-dark justify-content-center" style="background-color: #132D49">
+  <div class="navbar-brand mb-0 row">
+    <span class="h4">{{contract?.businessContractDTO.basicProfile.name}}</span>
+    <span class="h6 align-content-center">
+      <label class="con-label pl-2 ml-4">DOB:</label>
+      {{contract?.businessContractDTO.basicProfile.dateOfBirth | date: 'MM/dd/yyyy'}}
+      <label class="con-label ml-4">Last 12 Citizen Identifier:</label>
+      {{contract?.businessContractDTO.citizenIdentifier.split('-').pop()}}
+      <label class="con-label ml-4">City:</label>
+      {{contract?.businessContractDTO.basicProfile.address.city}}
+      <label class="con-label ml-4">State:</label>
+      {{contract?.businessContractDTO.basicProfile.address.state}}
+      <label class="con-label ml-4">Status:</label>
+      {{contract?.businessContractDTO.status | profileStatus}}
+    </span>
+     
+  </div>
+</nav>
+-->
+
+<!--<div class="container-fluid" style="background-color: #274463">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2 con-text">{{contract?.businessContractDTO.basicProfile.name}}</div>
+      <div class="col-sm-10 con-text align-middle">
+        <label class="con-label">DOB:</label>
+        {{contract?.businessContractDTO.basicProfile.dateOfBirth | date: 'MM/dd/yyyy'}}
+        <label class="con-label ml-4">Last 12 Citizen Identifier:</label>
+        {{contract?.businessContractDTO.citizenIdentifier.split('-').pop()}}
+        <label class="con-label ml-4">City:</label>
+        {{contract?.businessContractDTO.basicProfile.address.city}}
+        <label class="con-label ml-4">State:</label>
+        {{contract?.businessContractDTO.basicProfile.address.state}}
+        <label class="con-label ml-4">Status:</label>
+      </div>
+    </div>
+  </div>
+</div>-->
+<div class="container mt-3">
+  <!-- <app-profile-identity [model]="userProfile.userDriverLicense"></app-profile-identity> -->
+  <app-profile-identity></app-profile-identity>
+  <app-profile-proof-citizenship></app-profile-proof-citizenship>
+  <app-profile-marital-status></app-profile-marital-status>
+</div>

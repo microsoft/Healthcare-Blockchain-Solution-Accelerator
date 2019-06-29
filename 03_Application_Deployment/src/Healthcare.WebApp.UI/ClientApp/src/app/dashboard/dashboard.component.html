@@ -1,0 +1,92 @@
+<div class="container-fluid sub-nav">
+  <div class="container">
+    <a href="/" class="mr-2">Dashboard</a> /
+    <span class="mx-2"
+      ><span *ngIf="isUserLogged && isStateApprover">
+        {{ 'Pending Approvals' }}
+      </span>
+      <span *ngIf="isUserLogged && isCaseWorker">
+        {{ 'Assigned Citizen Profiles' }}
+      </span>
+      <span *ngIf="isUserLogged && isEnrollmentBroker">
+        {{ 'Pending Enrollments' }}
+      </span></span
+    >
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <h4 class="mt-4">
+        <span *ngIf="isUserLogged && isStateApprover">
+          {{ 'Pending Approvals' }}
+        </span>
+        <span *ngIf="isUserLogged && isCaseWorker">
+          {{ 'Assigned Citizen Profiles' }}
+        </span>
+        <span *ngIf="isUserLogged && isEnrollmentBroker">
+          {{ 'Pending Enrollments' }}
+        </span>
+      </h4>
+    </div>
+    <div class="col-md-3">
+      <span *ngIf="isUserLogged && isCaseWorker">
+        <button
+          class="btn btn-outline-info white btn-sm float-right mt-4"
+          type="button"
+          routerLink="/create-profile"
+          routerLinkActive="active"
+        >
+          <i class="fas fa-plus-circle"></i> New Citizen
+        </button>
+      </span>
+    </div>
+  </div>
+  <div class="profile-box ">
+    <table
+      class="table table-striped con-table hover"
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+    >
+      <thead class="con-table-header">
+        <tr>
+          <th>Name</th>
+          <th>Last 12 Citizen Identifier</th>
+          <th>Date of Birth</th>
+          <th>City</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!--| slice: (page-1) * pageSize : (page-1) * pageSize + pageSize-->
+        <tr *ngFor="let contract of contracts" (click)="addUser(contract)">
+          <td>{{ contract.businessContractDTO.basicProfile.name }}</td>
+          <td>
+            {{
+              contract.businessContractDTO.citizenIdentifier?.split('-').pop()
+            }}
+          </td>
+          <td>
+            {{
+              contract.businessContractDTO.basicProfile.dateOfBirth
+                | date: 'MM/dd/yyyy'
+            }}
+          </td>
+          <td>{{ contract.businessContractDTO.basicProfile.address.city }}</td>
+          <td>
+            <span
+              class="badge badge-success {{
+                contract.businessContractDTO.status | profileStatus
+              }}"
+              >{{ contract.businessContractDTO.status | profileStatus }}</span
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!--<ngb-pagination [(page)]="page"
+  [pageSize]="pageSize"
+  [collectionSize]="items.length" [boundaryLinks]="true"></ngb-pagination>-->
+</div>

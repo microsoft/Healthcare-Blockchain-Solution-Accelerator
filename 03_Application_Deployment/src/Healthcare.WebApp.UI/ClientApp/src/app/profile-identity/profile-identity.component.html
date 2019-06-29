@@ -1,0 +1,282 @@
+<!--IDENTITY CARD-->
+<div class="container">
+    <form #profileIdentityForm="ngForm" (ngSubmit)="onSubmit()">
+    <!-- READ ONLY PROFILE -->
+    <div class="profile-box pb-5 d-block" id="profileReadOnly">
+        <div class="box-title">Citizen Profile <button class="btn btn-info btn-sm float-right" type="button" (click)="editForm()">Edit</button></div>
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <img #img id="imgProof" class="profile-picture" [src]="imgUrl" alt="Citizen Proof Document" >
+            <button type="button" class="btn btn-outline-info btn-sm" (click)="verifyDocument()"><i class="fas fa-check"></i> Re-Verify</button>
+            
+          </div>
+          <div class="col-md-3">
+            <div class="desc">Full Name</div>
+            <div class="full-name">{{ model.businessContractDTO.basicProfile.name }}</div>
+            <div class="desc">DOB</div>
+            <div>{{ model.businessContractDTO.basicProfile.dateOfBirth | date:'MM-dd-yyyy' }}</div>
+            <div class="desc">Address</div>
+            <div class="address">{{ model.businessContractDTO.basicProfile.address.street }}</div>
+            <div class="address">{{ model.businessContractDTO.basicProfile.address.city }}</div>
+            <div class="address">{{ model.businessContractDTO.basicProfile.address.state }}</div>
+            <div class="address">{{ model.businessContractDTO.basicProfile.address.zip }}</div>
+          </div>
+          <div class="col-md-3">
+              <div class="desc">Status</div><span class="badge badge badge-success p-1 {{model.businessContractDTO.status | profileStatus}}">{{model.businessContractDTO.status | profileStatus}}</span>
+              <div class="desc">Last 12 Citizen Identifier</div>
+            <div>{{model.businessContractDTO.citizenIdentifier.split('-').pop()}}</div>
+            <div class="desc">Citizenship</div>
+            <div>USA
+              <!--TODO - {{ model.businessContractDTO.basicProfile.citizenship }} -->
+            </div>
+          </div>
+          <div class="col-md-3">
+              <div class="desc">Federal Income</div>
+            <div>{{ model.businessContractDTO.basicProfile.fedIncome }}</div>
+            <div class="desc">State Income</div>
+            <div>{{ model.businessContractDTO.basicProfile.stateIncome }}</div>
+            <div *ngIf="model.businessContractDTO.preferredHealthcarePlan">
+              <div class="desc">Preferred Healthcare Plan</div>
+              <div> {{model.businessContractDTO.preferredHealthcarePlan.name}} </div>
+              <div class="desc">Medicaid Eligibility Status</div>
+              <div *ngIf="model.businessContractDTO.currentHealthcarePlan.eligible">Eligible</div>
+              <div *ngIf="!model.businessContractDTO.currentHealthcarePlan.eligible">Ineligible</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- EDIT MODE-->
+      <div class="profile-box pb-5 d-none editmode" id="profileEdit">
+          <div class="box-title-edit"><span class="text-primary">EDIT - </span>Citizen Profile <button class="btn btn-secondary btn-sm float-right ml-2" type="button" (click)="cancelUpdate()">Cancel</button> <button type="submit" class="btn btn-success btn-sm float-right" [disabled]="verified">Update</button></div>
+          <div class="row">
+              <div class="col-md-3 text-center">
+                  <div class="hovereffect">
+                    <img #imgE id="imgProofE" class="profile-picture" [src]="imgUrlE" alt="Citizen Proof Document">
+                    <div class="overlay">
+                      <input #file id="uploadFile" type="file" accept="image/*" (change)="changeListener($event)">
+                      <label for="uploadFile" class="h2">Upload Proof Photo</label>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="desc2 con-required mt-4" for="fullNameE">Full Name</label>
+                      <input type="text" required class="form-control" id="fullNameE" name="fullNameE"
+                      [(ngModel)]="model.businessContractDTO.basicProfile.name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="desc2 con-required" for="dateOfBirthE">Date of Birth</label>
+                        <input type="date" required class="form-control" id="dateOfBirthE" name="dateOfBirthE"
+                          [ngModel]="model.businessContractDTO.basicProfile.dateOfBirth | date:'yyyy-MM-dd'"
+                          (ngModelChange)="model.businessContractDTO.basicProfile.dateOfBirth = $event" />
+                    </div>
+                    <div class="form-group">
+                        <label class="desc2 con-required" for="citizenshipE">Citizenship</label>
+                        <input type="text" required class="form-control" id="citizenshipE" name="citizenshipE"
+                          value="USA" />
+                        <!--TODO [(ngModel)]="model.businessContractDTO.basicProfile.citizenship"-->
+                    </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group">
+                      <label class="desc2 con-required mt-4" for="streetE">Street</label>
+                      <input type="text" required class="form-control" id="streetE" name="streetE"
+                        [(ngModel)]="model.businessContractDTO.basicProfile.address.street" />
+                  </div>
+                  <div class="form-group">
+                      <label class="desc2 con-required" for="cityE">City</label>
+                      <input type="text" required class="form-control" id="cityE" name="cityE"
+                        [(ngModel)]="model.businessContractDTO.basicProfile.address.city" />
+                  </div>
+                  <div class="form-group">
+                      <label class="desc2 con-required" for="stateE">State</label>
+                      <select class="form-control m50" required id="stateE" name="stateE"
+                        [(ngModel)]="model.businessContractDTO.basicProfile.address.state">
+                        <!--<option>NJ</option>-->
+                        <option>NY</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label class="desc2 con-required" for="postcode">Postal Code</label>
+                      <input type="text" required class="form-control" id="postcodeE" name="postcodeE"
+                        [(ngModel)]="model.businessContractDTO.basicProfile.address.zip" />
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="desc2 con-required mt-4" for="federalIncomeE">Federal Income</label>
+                    <input type="number" required class="form-control" id="federalIncomeE" name="federalIncomeE"
+                      [(ngModel)]="model.businessContractDTO.basicProfile.fedIncome" />
+                  </div>
+                  <div class="form-group">
+                      <label class="desc2 con-required" for="stateIncomeE">State Income</label>
+                      <input type="number" required class="form-control" id="stateIncomeE" name="stateIncomeE"
+                        [(ngModel)]="model.businessContractDTO.basicProfile.stateIncome" />
+                  </div>
+                  <div class="form-group" *ngIf="model.businessContractDTO.preferredHealthcarePlan">
+                      <label class="desc2 con-required" for="preferredHealthcarePlanE">Preferred Healthcare
+                        Plan</label>
+                      <select class="form-control" required id="preferredHealthcarePlanE" name="preferredHealthcarePlanE"
+                        [(ngModel)]="model.businessContractDTO.preferredHealthcarePlan">
+                        <option *ngFor="let plan of availablePlans" [ngValue]="plan">{{plan.name}}</option>
+                      </select>
+                      <!--<select class="form-control-plaintext" readonly id="preferredHealthcarePlan"
+                              name="preferredHealthcarePlan" [(ngModel)]="model.businessContractDTO.preferredHealthcarePlan">
+                        <option [ngValue]="model.businessContractDTO.preferredHealthcarePlan">
+                          {{model.businessContractDTO.preferredHealthcarePlan.name}}
+                        </option>
+                      </select>-->
+                    </div>
+              </div>
+          </div>
+      </div>
+
+      <!--HEALTHCARE PLAN-->
+      <div class="profile-box">
+        <div class="box-title">Assigned Healthcare Plan</div>
+        
+        <div *ngIf="model.businessContractDTO.currentHealthcarePlan">
+            <form #assignedHealthCareForm="ngForm" (ngSubmit)="onAssign()">
+                
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-6">
+                    <div class="isStateApprover isCaseWorker">
+                      <label class="desc" for="currPlan">Assigned Healthcare Plan</label>
+                      <select class="form-control-plaintext" readonly id="currPlan" name="currPlan"
+                        [(ngModel)]="model.businessContractDTO.currentHealthcarePlan.plan"
+                        *ngIf="model.businessContractDTO.currentHealthcarePlan.plan">
+                        <option [ngValue]="model.businessContractDTO.currentHealthcarePlan.plan">
+                          {{model.businessContractDTO.currentHealthcarePlan.plan.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="isEnrollmentBroker">
+                      <label class="desc" for="currPlanE">Assigned Healthcare Plan</label>
+                      <select class="form-control" required id="currPlanE" name="currPlanE"
+                        [(ngModel)]="model.businessContractDTO.currentHealthcarePlan.plan">
+                        <option *ngFor="let plan of availablePlans" [ngValue]="plan">{{plan.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="desc" for="eligibilityStatus">Healthcare Plan Status</label>
+                    <input #eligibilityStatus type="text" readonly class="form-control-plaintext" id="eligibilityStatus"
+                      name="eligibilityStatus" [value]="currEligibilityStatus"/>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="desc" for="approved">Approval Status</label>
+                    <input #approvalStatus type="text" readonly class="form-control-plaintext" id="approvedStatus_notApproved"
+                      name="approvalStatus_notapproved" value="Not Approved"
+                      *ngIf="!this.model.businessContractDTO.currentHealthcarePlan.approved" />
+                    <input #approvalStatus type="text" readonly class="form-control-plaintext" id="approvedStatus_Approved"
+                      name="approvalStatus_approved" value="Approved"
+                      *ngIf="this.model.businessContractDTO.currentHealthcarePlan.approved" />
+                  </div>
+      
+                </div>
+              </div>
+              <div class="isEnrollmentBroker">
+                <button type="submit" class="btn btn-success ml-2"
+                  [disabled]="model.businessContractDTO.currentHealthcarePlan.plan == null">Assign</button>
+              </div>
+              <div class="isStateApprover">
+                <button type="button" class="btn btn-success ml-2" (click)="approvePlan()">Approve</button>
+              </div>
+            </form>
+          </div>
+      </div>
+      </form>
+      
+<!-- VERIFY MODAL -->
+<div class="modal fade" id="modalVerify" tabindex="-1" role="dialog" aria-labelledby="modalVerify" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form>
+          <div class="form-row justify-content-center">
+            <div class="form-group">
+              <div id="ledgerMsgVerify">
+                The stored Proof image is verified as genuine with checking from Ledger
+                <i class="fas fa-check" style="color:#24A335;"></i>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESSING MODAL -->
+<div class="modal fade" id="modalprocessing" tabindex="-1" role="dialog" aria-labelledby="modalProcessing"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+          <div class="row justify-content-center">
+              <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div class="ml-3 mt-1">Transaction Processing...</div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE PROFILE SUCCESSFUL MODAL -->
+<div class="modal fade" id="modalUpdateSuccessful" tabindex="-1" role="dialog" aria-labelledby="modalUpdateSuccessful"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-center">
+            <h5 class="m-4">The Citizen Profile was updated successfully!</h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" (click)="updateModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESSFUL SUBMIT MODAL -->
+<div class="modal fade" id="modalSubmitSuccessful" tabindex="-1" role="dialog" aria-labelledby="modalSubmitSuccessful"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <img src="../../assets/VerificationSuccessful.png" alt="Submission Successful"
+            style="height: 90%; width: 90%;">
+        </div>
+        <div class="row justify-content-center">
+          <div>
+            <span style="color:#24A335;"><strong>Good news!</strong></span>
+            <div class="isCaseWorker">
+              Submission was successful. An Enrollment Broker will now perform a review and provide recommendations on
+              benefits based
+              on the information submitted in this profile.
+            </div>
+            <div class="isEnrollmentBroker">
+              Plan recommendation was successful. A State Approver will now perform a review based
+              on the information submitted in this profile.
+            </div>
+            <div class="isStateApprover">
+              Final Approval was successful. A Health Provider will now perform a review and provide benefits based
+              on the Approved profile.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal" (click)="successModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

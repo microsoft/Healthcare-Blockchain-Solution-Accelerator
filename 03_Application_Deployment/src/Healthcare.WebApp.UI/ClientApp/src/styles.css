@@ -1,0 +1,126 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  background-color: #eaedf1;
+}
+
+.con-required:after {
+  color: #d00;
+  content: '*';
+  position: absolute;
+  margin-left: 8px;
+  /*top: 7px;*/
+}
+
+/** GRID LAYOUTS **/
+.con-table {
+  border-radius: 15% 15% 0% 0%;
+}
+
+.con-table-header {
+  background: #606363;
+  color: white;
+}
+/** END GRID LAYOUTS **/
+
+/******* CONTENT ********/
+.sub-nav {
+  background-color: #fff;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 10px 0;
+  color: rgb(148, 148, 148);
+  font-size: 0.8em;
+  font-weight: 400;
+}
+.sub-nav a {
+  color: #2ca0a8;
+}
+
+.profile-box {
+  background-color: #fff;
+  min-height: 150px;
+  padding: 10px;
+  margin: 20px 10px;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.editmode {
+  background-color: #ecf0f3;
+}
+.box-title {
+  font-size: 1.2em;
+  font-weight: 500;
+  padding: 5px 15px 10px;
+  border-bottom: 1px solid #e4e4e4;
+}
+.box-title-edit {
+  font-size: 1.2em;
+  font-weight: 500;
+  padding: 5px 15px 10px;
+  background-color: #c1dee2;
+  border-radius: 5px;
+}
+.profile-picture {
+  max-width: 75%;
+  border-radius: 50%;
+  border: 4px solid #d1d1d1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin: 20px;
+}
+
+.desc {
+  font-size: 0.8em;
+  margin: 20px 0 0;
+  font-weight: 600;
+  color: rgb(24, 141, 170);
+}
+.desc2 {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: rgb(24, 141, 170);
+}
+.white {
+  background-color: #fff;
+}
+.white:hover {
+  background-color: #17a2b8;
+}
+.Completed {
+  color: #fff;
+  background-color: #28a745;
+}
+.Created {
+  color: #fff;
+  background-color: #8328a7;
+}
+.full-name {
+  font-size: 1.3em;
+  font-weight: 500;
+}
+.address {
+  line-height: 1.2em;
+}
+.m75 {
+  width: 75% !important;
+}
+.m50 {
+  width: 50% !important;
+}
+/*******MEDIA QUERY *************/
+@media screen and (max-width: 767px) {
+  .user-type {
+    padding: 110px 10px 10px;
+    text-align: center;
+    margin: 10px;
+  }
+  .image-box {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    border-radius: 50%;
+    border: 5px solid #fff;
+  }
+}

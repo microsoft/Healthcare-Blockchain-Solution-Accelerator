@@ -1,0 +1,28 @@
+.header {
+  background-color: #fff;
+  color: #777;
+}
+.logo {
+  max-height: 60px;
+  color: #03121f;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+.user {
+  padding: 1px 5px;
+  border-radius: 20px;
+  border: 1px solid #48bdc5;
+  background-color: #48bdc5;
+  color: #fff;
+}
+.dropdown-item:hover,
+.dropdown-item:active {
+  color: #333;
+  text-decoration: none;
+  background-color: #ebebeb;
+}
+
+.con-page-title {
+  border-left: 2px solid gray;
+  color: gray;
+}

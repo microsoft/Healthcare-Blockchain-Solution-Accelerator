@@ -1,0 +1,42 @@
+.navbar-dark .navbar-nav a.nav-link.con-menu-item {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.navbar-dark .navbar-nav a.nav-link.con-menu-item.active {
+  color: #ff8601;
+}
+
+.navbar-dark
+  .navbar-nav
+  li.nav-item.con-nav-item
+  > a.nav-link.con-menu-item.active {
+  background-color: #132d49;
+}
+.nav-row {
+  background-color: #48bdc5;
+}
+.nav-row a {
+  color: #fff;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 15px 20px;
+  color: #fff;
+  display: inline-block;
+  text-decoration: none;
+}
+.nav-row a:hover {
+  background-color: #2da2aa;
+  text-decoration: none;
+}
+.nav-row a.active {
+  background-color: #2da2aa;
+}
+.nav-row ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-row ul li {
+  float: left;
+}

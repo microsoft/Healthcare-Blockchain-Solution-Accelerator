@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package contoso.healthcare;
+
+import "profile.proto";
+
+option csharp_namespace = "Healthcare.BC.Chain.Service.Messages";
+option java_package = "com.contoso.healthcare.service";
+option java_outer_classname = "HealthcareApi";
+option java_multiple_files = true;
+
+message UpdateProfileProofDocument {
+    string citizen_identifier = 1;
+    DocProof doc_proof = 2;
+}
+
+message SetEligibility {
+    string citizen_identifier = 1;
+    bool eligible = 2;
+}
+
+message GetProfileInformation {
+    string citizen_identifier = 1;
+}
+
+message AssignHealthcarePlan {
+    string citizen_identifier = 1;
+    HealthcarePlanItem plan = 2;
+}
+
+message ApproveHealthcarePlan {
+    string citizen_identifier = 1;
+    string plan_approver = 2;
+}
+
+//message EnrollmentBrokerAssignment {
+//    string citizen_identifier = 1;
+//    EnrollmentBrokerStatus status = 2;
+//}
+
+message ChangeActiveState {
+    string citizen_identifier = 1;
+    State active_state = 2;
+}
+
+service HealthcareService {
+
+    rpc createProfile (Profile) returns (Profile) {
+    }
+    rpc updateProfileProofDocument (UpdateProfileProofDocument) returns (Profile) {
+    }
+    rpc getProfileInformation (GetProfileInformation) returns (Profile) {
+    }
+    rpc assignHealthcarePlan (AssignHealthcarePlan) returns (Profile) {
+    }
+    rpc approveHealthcarePlan (ApproveHealthcarePlan) returns (Profile) {
+    }
+    rpc changeActiveState (ChangeActiveState) returns (Profile) {
+    }
+    rpc setEligibility (SetEligibility) returns (Profile) {
+    }
+    //    rpc enrollmentBrokerAssignment (EnrollmentBrokerAssignment) returns (protos.Response) {
+    //    }
+}
