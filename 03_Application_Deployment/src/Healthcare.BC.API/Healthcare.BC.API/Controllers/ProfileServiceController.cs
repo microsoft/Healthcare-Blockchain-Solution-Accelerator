@@ -19,10 +19,11 @@ using Microsoft.ServiceFabric.Services.Client;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Healthcare.Common.ServiceHost;
-
+using Microsoft.AspNetCore.Cors;
 
 namespace Healthcare.BC.Application.API.Controllers
 {
+    [EnableCors("SiteCorsPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProfileServiceController : ControllerBase

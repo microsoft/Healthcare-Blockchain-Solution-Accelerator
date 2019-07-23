@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using Healthcare.BC.Service;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Healthcare.BC.Application.API
 {
@@ -28,7 +29,15 @@ namespace Healthcare.BC.Application.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddCors();
+            var corsBuilder = new CorsPolicyBuilder();
+            corsBuilder.AllowAnyHeader();
+            corsBuilder.AllowAnyMethod();
+            corsBuilder.AllowAnyOrigin();
+            corsBuilder.AllowCredentials();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+            });
             services.AddSwaggerGen(c =>
             {
 
@@ -45,11 +54,7 @@ namespace Healthcare.BC.Application.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+            app.UseCors("SiteCorsPolicy");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
