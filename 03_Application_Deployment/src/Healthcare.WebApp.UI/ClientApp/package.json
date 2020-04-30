@@ -27,7 +27,7 @@
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "guid-typescript": "^1.0.9",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.14.7",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
